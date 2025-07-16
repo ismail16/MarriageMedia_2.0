@@ -1,0 +1,78 @@
+.ftco-navbar-light .navbar-nav>.nav-item>.nav-link{
+	font-size: 16px;
+	font-weight: bold !important;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 300;
+    color: #fff;
+    cursor: pointer;
+    opacity: 1!important;
+}
+
+.search_option_div{
+	opacity: .9
+}
+
+
+/*search_option_div > search_option{
+
+}
+*/
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .search_option_div > .search_option {
+    width: 50%;
+  }
+
+  .search_option_div > .search_option > .age_limit {
+    width: 25%;
+  }
+
+
+}
+
+.services .icon{
+  margin:auto;
+}
+
+.popup_modal{
+  margin: 60px 50px;
+  opacity: .8;
+  width: -webkit-fill-available;
+}
+
+.modal_content{
+  opacity: .9;
+}
+
+.features{
+  padding: 0px;
+}
+
+.features > li{
+  list-style-type: none;
+  color: #000;
+  border-bottom: 1px solid #e9e6e6;
+  /*text-align: left;*/
+  padding-top: 5px;
+  font-size: 14px;
+}
+
+.footer_link{
+  padding: 0px;
+}
+
+.footer_link > li{
+  list-style-type: none;
+  text-align: left;
+}
+
+.footer_link > li a{
+  /*color: #fff !important;*/
+}
+
+.testimony-section .owl-nav .owl-prev, .testimony-section .owl-nav .owl-next{
+  opacity: 1 !important;
+}

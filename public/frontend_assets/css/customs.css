@@ -1,0 +1,60 @@
+.invalid-feedback {
+    margin-top: -.25rem !important;
+}
+span {
+    color: #040404;
+}
+.image-size{
+	max-height: 140px !important;
+}
+.bg-light-green{
+    background-color: #f5ffd7e0;;
+}
+.bg-body-green{
+        background-color: #91d2ab3b;
+}
+.form-label{
+    color: #cf51a4 !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .ftco-navbar-light .navbar-nav>.nav-item>.nav-link{
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+  }
+  .navbar-collapse{
+    background-color: #c2e0a694 !important;
+  }
+  .ftco-navbar-light{
+    padding: 5px 15px 0px 15px !important;
+  }
+  .navbar-collapse>.navbar-nav>.nav-item{
+    border-bottom: 1px solid;
+  }
+}
+
+.gradient-reverse{
+    background-image:radial-gradient( circle 500px at 85.8% 20.3%,rgba(255,244,169,1) 0%,rgba(255,244,234,1) 100.2% )
+}
+
+
+.gradient{
+    background-image: radial-gradient( circle 400px at 6.8% 8.3%,  rgba(255,244,169,1) 0%, rgba(255,244,234,1) 100.2% );
+}
+
+.boxshadow-green{
+    background-color: #edf3c7 !important;border: 1px solid #d9e783; box-shadow: rgb(252 245 181 / 0%) 0px 54px 55px, rgb(0 0 0 / 12%) 0px -12px 30px, rgb(0 0 0 / 12%) 0px 4px 6px;
+}
+.owl-stage-outer{
+    padding-bottom: 0px !important;
+}
+
+.update-btn{
+	background-color: #cf51a4 !important;
+	color: #fff;
+}
+
+.update-btn:hover{
+	background-color: #ca439d !important;
+	color: #fff;
+}
