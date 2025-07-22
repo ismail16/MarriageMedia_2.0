@@ -15,44 +15,28 @@ class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    // /**
-    //  * The attributes that are mass assignable.
-    //  *
-    //  * @var array<int, string>
-    //  */
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
-
-    // /**
-    //  * The attributes that should be hidden for serialization.
-    //  *
-    //  * @var array<int, string>
-    //  */
-    // protected $hidden = [
-    //     'password',
-    //     'remember_token',
-    // ];
-
-    // /**
-    //  * The attributes that should be cast.
-    //  *
-    //  * @var array<string, string>
-    //  */
-    // protected $casts = [
-    //     'email_verified_at' => 'datetime',
-    // ];
-
     protected $fillable = [
-        'name',
+        'aid',
+        'first_name',
+        'last_name',
+        'mobile',
         'email',
+        'gender',
+        'marital_status',
+        'profession',
+        'country',
+        'district',
+        'birthday',
+        'religion',
+        'social_order',
+        'looking_for',
+        'address',
+        'agreement',
         'password',
         'role_id',
         'status',
-        'created_by',
-        'updated_by'
+        'createdby',
+        'updatedby'
     ];
 
     /**
@@ -85,11 +69,6 @@ class Admin extends Authenticatable
         return $this->belongsTo('App\Models\Admin\Role', 'role_id', 'id');
     }
 
-
-    // public function warehouses()
-    // {
-    //     return $this->belongsToMany(AdminWarehouse::class, 'user_warehouses');
-    // }
     public function deliveryAgent()
     {
         return $this->hasOne(DeliveryAgent::class);

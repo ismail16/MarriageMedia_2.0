@@ -13,12 +13,14 @@ import Role from "./components/admin/role_permission/Role.vue";
 import RolePermission from "./components/admin/role_permission/RolePermission.vue";
 import AddEditRolePermission from "./components/admin/role_permission/AddEditRolePermission.vue";
 
-//user
-import User from "./components/admin/users/User.vue";
+//admin
+import Admin from "./components/admin/admins/Admin.vue";
+
+
 import Customer from "./components/admin/users/Customer.vue";
 import CustomerProfile from "./components/admin/users/CustomerProfile.vue";
 
-import activebridegroom from "./components/admin/users/User.vue";
+import activebridegroom from "./components/admin/groom_bride/Active.vue";
 
 
 export default [
@@ -42,7 +44,9 @@ export default [
             { path: 'role-permission/edit/:id/:name', component: AddEditRolePermission, name:"edit-role-permission",  meta: { auth: true }},
 
             //user
-            { path: "user", component: User, name: "admin-user", meta: { auth: true }},
+            { path: "user", component: Admin, name: "admin-user", meta: { auth: true }},
+
+
             { path: "customer", component: Customer, name: "customer", meta: { auth: true }},
             { path: "read-customers/:id", component: CustomerProfile, name: "read-customers", meta: { auth: true }},
 

@@ -2,16 +2,17 @@
 
 namespace App\Repository\Admin;
 
-use App\Interfaces\Admin\UserInterface;
-use App\Http\Resources\Admin\AdminUser as AdminUserResource;
-use App\Models\Admin\UserWarehouse;
+use Exception;
 use App\Models\Admin;
 use App\Traits\ApiResponser;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Exception;
+use App\Models\Admin\UserWarehouse;
+use Illuminate\Support\Facades\Auth;
+use App\Interfaces\Admin\AdminUserInterface;
+use App\Http\Resources\Admin\AdminUser as AdminUserResource;
 
-class UserRepository implements UserInterface
+class AdminUserRepository implements AdminUserInterface
 {
     use ApiResponser;
     /**
@@ -46,9 +47,9 @@ class UserRepository implements UserInterface
 
     public function show($id)
     {
-        $user = Admin::with('deliveryAgent')->whereHas('deliveryAgent')->findOrFail($id);
+        $adminUser = Admin::findOrFail($id);
         try {
-            return $this->successResponse($user, 'Data Get Successfully!');
+            return $this->successResponse($adminUser, 'Data Get Successfully!');
         } catch (Exception $e) {
             return $this->errorResponse();
         }
@@ -57,26 +58,35 @@ class UserRepository implements UserInterface
     public function store(array $parms)
     {
         $parms['password'] = bcrypt($parms['password']);
+        $parms['createdby'] = Auth::id();
+
+        $parms['country'] = (int)$parms['country'];
+
+        if (Admin::orderBy('id', 'desc')->first()) {
+            $last_id = Admin::orderBy('id', 'desc')->first()->id;
+            $parms['aid'] = 'A' . $last_id + 1;
+            $parms['id'] = $last_id + 1;
+        } else {
+            $parms['aid'] = 'A1';
+            $parms['id'] = 1;
+        }
+
+        // dd($parms);
+
         try {
             DB::beginTransaction();
             $sql = new Admin;
             $sql = $sql->create($parms);
-            if (isset($parms['warehouse_id'])) {
-                foreach ($parms['warehouse_id'] as $warehouse) {
-                    $data = [
-                        'user_id' => $sql->id,
-                        'warehouse_id' =>  $warehouse['warehouse_id']
-                    ];
-                    $UserWarehouse = UserWarehouse::create($data);
-                }
-            }
             DB::commit();
         } catch (Exception $e) {
+
+            dd($e);
+
             DB::rollBack();
             return $this->errorResponse();
         }
         if ($sql) {
-            return $this->successResponse(new UserResource($sql), 'User Save Successfully!');
+            return $this->successResponse(new AdminUserResource($sql), 'Admin User Save Successfully!');
         } else {
             return $this->errorResponse();
         }
@@ -88,31 +98,32 @@ class UserRepository implements UserInterface
         try {
 
             $user = Admin::find($id);
-            // return $user;
-            $user->name = $parms['name'];
+
+            $user->first_name = $parms['first_name'];
+            $user->last_name = $parms['last_name'];
+            $user->mobile = $parms['mobile'];
             $user->email = $parms['email'];
+            $user->gender = $parms['gender'];
+            $user->marital_status = $parms['marital_status'];
+            $user->profession = $parms['profession'];
+            $user->country = $parms['country'];
+            $user->district = $parms['district'];
+            $user->birthday = $parms['birthday'];
+            $user->religion = $parms['religion'];
+            $user->social_order = $parms['social_order'];
+            $user->address = $parms['address'];
             $user->status = $parms['status'];
             $user->role_id = $parms['role_id'];
+
             if (isset($parms['password']) && $parms['password'] != '' && $parms['password'] != null) {
                 $user->password = bcrypt($parms['password']);
             }
+
             $user->updated_by = auth()->user()->id;
             $user->save();
 
-            if (isset($parms['warehouse_id'])) {
-                UserWarehouse::where('user_id', $user->id)->delete();
-
-                foreach ($parms['warehouse_id'] as $warehouse) {
-                    // dd($warehouse);s
-                    $data = [
-                        'user_id' => $user->id,
-                        'warehouse_id' => $warehouse['warehouse_id']
-                    ];
-                    $UserWarehouse = UserWarehouse::create($data);
-                }
-            }
             DB::commit();
-            return $this->successResponse(new UserResource($user), 'Data Update Successfully!');
+            return $this->successResponse(new AdminUserResource($user), 'Data Update Successfully!');
         } catch (Exception $e) {
             DB::rollBack();
             return $this->errorResponse();
@@ -123,10 +134,10 @@ class UserRepository implements UserInterface
     {
         DB::beginTransaction();
         try {
-            $user = Admin::findOrFail($id);
-            $user->delete();
+            $adminUser = Admin::findOrFail($id);
+            $adminUser->delete();
             DB::commit();
-            return $this->successResponse(new UserResource($user), 'Data Delete Successfully!');
+            return $this->successResponse(new AdminUserResource($adminUser), 'Data Delete Successfully!');
         } catch (Exception $e) {
             DB::rollBack();
             return $this->errorResponse($e->getMessage());
