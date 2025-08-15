@@ -21,6 +21,9 @@ import Customer from "./components/admin/users/Customer.vue";
 import CustomerProfile from "./components/admin/users/CustomerProfile.vue";
 
 import activebridegroom from "./components/admin/groom_bride/Active.vue";
+import activeBrideGroomShow from "./components/admin/groom_bride/Show.vue";
+
+
 
 
 export default [
@@ -53,6 +56,7 @@ export default [
 
             //user
             { path: "activebridegroom", component: activebridegroom, name: "activebridegroom", meta: { auth: true }},
+            { path: "activebridegroom/show/:id", component: activeBrideGroomShow, name: "read-activebridegroom", meta: { auth: true }},
             // { path: "customer", component: Customer, name: "customer", meta: { auth: true }},
             // { path: "read-customers/:id", component: CustomerProfile, name: "read-customers", meta: { auth: true }},
         ],

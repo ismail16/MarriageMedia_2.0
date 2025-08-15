@@ -85,6 +85,60 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Admin\Role', 'role_id', 'id');
     }
 
+    public function user_info()
+    {
+        return $this->hasOne('App\Models\Admin\PersonalInfo');
+    }
+
+    public function preference()
+    {
+        return $this->hasOne('App\Models\Admin\Preference');
+    }
+
+    public function profileImages()
+    {
+        return $this->hasMany(UserProfileImage::class, 'user_id')->orderBy('created_at', 'desc');
+    }
+
+    public function affiliate_account()
+    {
+        return $this->hasOne('App\Models\AffiliateAccount');
+    }
+
+    public function referral_list()
+    {
+        return $this->hasMany('App\Models\ReferralList');
+    }
+
+    public function affiliate_payment()
+    {
+        return $this->hasMany('App\Models\AffiliatePayment');
+    }
+
+
+    public function country()
+    {
+        return $this->belongsTo('App\Models\Admin\Country');
+    }
+    public function division()
+    {
+        return $this->belongsTo('App\Models\Admin\Division');
+    }
+    public function district()
+    {
+        return $this->belongsTo('App\Models\Admin\District');
+    }
+    public function upazila()
+    {
+        return $this->belongsTo('App\Models\Admin\Upazila');
+    }
+    public function union()
+    {
+        return $this->belongsTo('App\Models\Admin\Union');
+    }
+
+
+
 
     // public function warehouses()
     // {

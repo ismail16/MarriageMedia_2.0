@@ -2,19 +2,19 @@
     <div class="content">
         <div class="breadcrumb-wrapper breadcrumb-contacts">
             <div>
-                <h1>User List</h1>
+                <h1>Brides/Grooms Active</h1>
                 <p class="breadcrumbs"><span><a href="/admin/dashboard">Dashboard</a></span>
-                    <span><i class="mdi mdi-chevron-right"></i></span>User
+                    <span><i class="mdi mdi-chevron-right"></i></span>Brides/Grooms Active
                 </p>
             </div>
             <div>
-                <button v-if="$allPermissions.includes('create-admin-user')"
+                <!-- <button v-if="$allPermissions.includes('create-admin-user')"
                     class="btn btn-primary  kt_notes_panel_toggle" data-toggle="tooltip" title="" data-placement="right"
                     data-original-title="Check out more demos" @click="createUser">
                     <span class="rounded-circle shadow-sm ">
                         Create User
                     </span>
-                </button>
+                </button> -->
             </div>
         </div>
         <div class="row">
@@ -48,8 +48,11 @@
                                     <tr>
                                         <th>SN</th>
                                         <th>Name</th>
+                                        <th>Image</th>
+                                        <th>Mobile</th>
                                         <th>Email</th>
-                                        <th>Role</th>
+                                        <th>Created</th>
+                                        <th>Activation</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -58,20 +61,46 @@
                                 <tbody>
                                     <tr v-for="user in users" v-bind:key="user.id">
                                         <td> {{ user.id }}</td>
-                                        <td> {{ user.name }}</td>
-                                        <td> {{ user.email }}</td>
-                                        <td>{{ user.role.name }}</td>
-                                        <td>{{ user.status }}</td>
+                                        <td> {{ user.first_name + ' ' + user.last_name }}</td>
                                         <td>
-                                            <a v-if="$allPermissions.includes('edit-admin-user')"
-                                                href="javascript:void(0)" class="btn btn-sm btn-info mr-1 click-edit"
-                                                id="click-edit1" data-toggle="tooltip" title="" data-placement="right"
-                                                data-original-title="Check out more demos" @click="editUser(user)">
-                                                <i class="fa fa-edit"></i> Edit
+                                            <img v-if="user.profile_images.length" :src="user.profile_images[0]"
+                                                alt="Profile Image" height="60" />
+                                            <span v-else>No image</span>
+                                        </td>
+                                        <td> {{ user.mobile }}</td>
+                                        <td> {{ user.email }}</td>
+                                        <td>{{ user.mobile }}</td>
+                                        <td>
+                                            <button v-if="user.status == 0" class="btn btn-xs text-white bg-danger"><i
+                                                    class="fa fa-times-circle"></i> Not Activated</button>
+                                            <button v-else class="btn btn-xs text-white bg-success"><i
+                                                    class="fa fa-check-circle"></i> Activated</button>
+                                            <!-- {{ user.status }} -->
+                                        </td>
+                                        <td>
+                                            <button v-if="user.status == 0" class="btn btn-xs text-white bg-danger"><i
+                                                    class="fa fa-times-circle"></i> Not Verify</button>
+                                            <button v-else class="btn btn-xs text-white bg-success"><i
+                                                    class="fa fa-check-circle"></i> Verified</button>
+                                        </td>
+                                        <td>
+
+                                            <router-link
+                                                :to="{ name: 'read-activebridegroom', params: { id: user.id } }"
+                                                class="btn btn-xs btn-success mr-1">
+                                                <i class="fa fa-eye"></i>
+                                            </router-link>
+
+                                            <a href="javascript:void(0)" class="btn btn-xs btn-info mr-1 click-edit"
+                                                data-toggle="tooltip" title="" data-placement="right"
+                                                data-original-title="Check out more demos"
+                                                @click="UserProfileCard(user)">
+                                                <i class="fa fa-book"></i>
                                             </a>
+
                                             <a v-if="user.id > 0 && $allPermissions.includes('delete-admin-user')"
-                                                class="btn btn-sm btn-danger" href="#" @click="deleteUser(user.id)">
-                                                <i class="fa fa-trash"></i> Delete
+                                                class="btn btn-xs btn-danger" href="#" @click="deleteUser(user.id)">
+                                                <i class="fa fa-trash"></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -106,6 +135,112 @@
 
         <!-- Add User Modal  -->
         <div class="modal fade modal-add-contact" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true" ref="UserProfileCard">
+
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content px-5 " style="height:auto;">
+                    <div class="modal-header">
+                        <!-- <h2 class="modal-title" id="exampleModalCenterTitle"></h2> -->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body card gradient m-3">
+                        <h4 class="text-center bg-info rounded">Profile ID - {{ this.user.uid }}</h4>
+                        <div class="row mt-3">
+                            <div class="col-md-5 pb-3 d-flex justify-content-center align-items-center">
+                                <img v-if="user.image" :src="user.image" class="img-fluid w-75"/>
+                                <img v-else-if="this.user.gender == 'female'" 
+                                    src="/images/icons/flaticon/arab-woman.png" alt="Bride Image" class="img-fluid w-75"/>
+                                <img v-else src="/images/icons/flaticon/businessman.png" alt="Groom Image"  class="img-fluid w-75"/>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="icon-label">
+                                            <p class="icon-label-text"><i class="far fa-calendar-alt text-success"></i> Age</p>
+                                            <strong>: {{ calculateAge(this.user.age) }} Years</strong>
+                                        </div>
+                                        <div class="icon-label">
+                                            <p class="icon-label-text"><i class="fas fa-female text-primary"></i> Gender</p>
+                                            <strong>: {{ this.user.gender }}</strong>
+                                        </div>
+                                        <div class="icon-label">
+                                            <p class="icon-label-text"><i class="fas fa-briefcase text-success"></i> Profession</p>
+                                            <strong>: {{ this.user.profession }}</strong>
+                                        </div>
+
+                                        <div class="icon-label">
+                                            <p class="icon-label-text"><i class="fas fa-graduation-cap text-info"></i> Qualification</p>
+                                            <strong>: {{ this.user.qualification }}</strong>
+                                        </div>
+                                        <div class="icon-label">
+                                            <p class="icon-label-text"><i class="text-danger fas fa-heart"></i> Marital status</p>
+                                            <strong>: {{ this.user.maritalStatus }}</strong>
+                                        </div>
+
+                                        <div class="icon-label">
+                                            <p class="icon-label-text"><i class="fas fa-restroom text-success"></i> Height </p>
+                                            <strong>: {{ this.user.height }}</strong>
+                                        </div>
+                                        <div class="icon-label">
+                                            <p class="icon-label-text"><i class="fas fa-weight text-info"></i> Weight</p>
+                                            <strong>: {{ this.user.weight }} KG</strong>
+                                        </div>
+
+                                        <div class="icon-label">
+                                            <p class="icon-label-text"><i class="fas fa-synagogue text-success"></i> Religion</p>
+                                            <strong>: {{ this.user.religion }}</strong>
+                                        </div>
+
+                                        <div class="icon-label">
+                                            <p class="icon-label-text"><i class="fas text-danger fa-tint"></i> Blood</p>
+                                            <strong>: {{ this.user.blood }}</strong>
+                                        </div>
+                                        <div class="icon-label">
+                                            <p class="icon-label-text"><i class="fa fa-map-marker text-warning"></i>Location</p>
+                                            <strong>: {{ this.user.location }}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                        <h4 class="text-center bg-light rounded mt-3">www.bdmarriagemedia.com</h4>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" @click="closeModal"> 
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                        <!-- <button type="button" class="btn btn-primary btn-sm" data-toggle="collapse"
+                            data-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample"> <i
+                                class="fas fa-share pr-2"></i>
+                            Share</button> -->
+                    </div>
+
+                    <!-- <div class="collapse show" id="collapseExample" style="">
+                        <div class="">
+                            <ul class="d-flex list-unstyled justify-content-end mb-2">
+
+                                <li class="ml-3 p-3"><a href="#" class="social-share-link" data-platform="facebook"><i
+                                            class="fab fa-facebook text-primary fa-2x"></i></a></li>
+                                <li class="ml-3 p-3"><a href="#" class="social-share-link" data-platform="twitter"><i
+                                            class="fab fa-twitter text-primary fa-2x"></i></a></li>
+                                <li class="ml-3 p-3"><a href="#" class="social-share-link" data-platform="whatsapp"><i
+                                            class="fab fa-whatsapp text-success fa-2x"></i></a></li>
+                                <li class="ml-3 p-3"><a href="#" class="social-share-link" data-platform="linkedin"><i
+                                            class="fab fa-linkedin text-info fa-2x"></i></a></li>
+                                <li class="ml-3 p-3"> <a href=""><i class="fas fa-link fa-2x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div> -->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Add User Modal  -->
+        <!-- <div class="modal fade modal-add-contact" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
             aria-hidden="true" ref="showModal">
 
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -196,31 +331,33 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div> <!-- End Content -->
 
 </template>
 <script>
 import ErrorHandling from "../../../plugins/ErrorHandling";
-import Multiselect from 'vue-multiselect';
-
-
 
 export default {
-    components: {
-        Multiselect
-    },
+
     data() {
         return {
             display_form: false,
             user: {
                 id: "",
+                uid: "",
+                image: "",
                 name: "",
-                email: "",
-                role_id: "",
-                status: "",
-                password: "",
-                confirm_password: "",
+                age: "",
+                gender: "",
+                profession: "",
+                qualification: "",
+                maritalStatus: "",
+                height: "",
+                weight: "",
+                religion: "",
+                blood: "",
+                location: "",
             },
 
             searchParameter: '',
@@ -228,21 +365,18 @@ export default {
             sortType: 'DESC',
             limit: 10,
             error_message: '',
-            edit: false,
-            actions: false,
             pagination: {},
-            request_method: "",
-            countrySelected: "",
-            stateSelected: "",
             users: [],
-            roles: [],
             token: [],
-            displayModal: false,
             errors: new ErrorHandling(),
         };
     },
 
     methods: {
+
+        closeModal() {
+            $(this.$refs.UserProfileCard).modal("hide");
+        },
 
         enableInput(event) {
             event.target.removeAttribute('readonly');
@@ -252,11 +386,8 @@ export default {
             $(this.$refs.showModal).modal("show");
         },
 
-        createUser() {
-            this.errors.record('');
-            this.clearForm();
-            this.fetchRoles();
-            this.showModal();
+        showUserProfileCardModal() {
+            $(this.$refs.UserProfileCard).modal("show");
         },
 
         fetchUser(page_url) {
@@ -265,7 +396,7 @@ export default {
             console.log("Searching for:", this.searchParameter);
 
             let vm = this;
-            page_url = page_url || "/api/admin/user";
+            page_url = page_url || "/api/admin/groom-bride";
             var arr = page_url.split('?');
 
             if (arr.length > 1) {
@@ -283,14 +414,12 @@ export default {
 
             axios.get(page_url, this.token).then(res => {
                 this.users = res.data.data;
+
+                console.log('res.data.data')
+                console.log(res.data.data)
+
                 vm.makePagination(res.data.meta, res.data.links);
             }).finally(() => this.$hideLoader());
-        },
-
-        fetchRoles() {
-            axios.get("/api/admin/role", this.token).then((response) => {
-                this.roles = response.data.data;
-            });
         },
 
         makePagination(meta, links) {
@@ -318,56 +447,22 @@ export default {
             }
         },
 
-        addUpdateUser() {
-            this.$showLoader();
-            if (this.edit === false) {
-                //console.log(this.user);
-                axios.post("/api/admin/user", this.user, this.token)
-                    .then((response) => {
-                        //console.log(response.data);
-                        this.fetchUser();
-                        this.clearForm();
-                        $(this.$refs.showModal).modal("hide");
-                        this.$toast(response.data.message, 'success', 3000);
-                    }).catch((error) => {
-                        this.error_message = "";
-                        this.errors = new ErrorHandling();
-                        if ((error.response.status = 422)) {
-                            if (error.response.data.status == "Error") {
-                                this.error_message = error.response.data.message;
-                            } else {
-                                this.errors.record(error.response.data.errors);
-                            }
-                        }
-                    })
-                    .finally(() => this.$hideLoader());
-            } else {
-                axios
-                    .put(
-                        "/api/admin/user/" + this.user.id,
-                        this.user,
-                        this.token
-                    )
-                    .then((response) => {
-                        //console.log(response.data);
-                        this.fetchUser();
-                        this.clearForm();
-                        $(this.$refs.showModal).modal("hide");
-                        this.$toast(response.data.message, 'success', 3000);
-                    })
-                    .catch((error) => {
-                        this.error_message = "";
-                        this.errors = new ErrorHandling();
-                        if ((error.response.status = 422)) {
-                            if (error.response.data.status == "Error") {
-                                this.error_message = error.response.data.message;
-                            } else {
-                                this.errors.record(error.response.data.errors);
-                            }
-                        }
-                    })
-                    .finally(() => this.$hideLoader());
-            }
+        UserProfileCard(user) {
+            this.showUserProfileCardModal();
+            this.user.id = user.id;
+            this.user.uid = user.uid;
+            this.user.name = user.first_name + ' ' + user.last_name;
+            this.user.age = user.birthday;
+            this.user.image = user.profile_images[0];
+            this.user.gender = user.gender;
+            this.user.profession = user.profession;
+            this.user.qualification = user.user_info.education_level;
+            this.user.maritalStatus = user.marital_status;
+            this.user.height = user.user_info.height;
+            this.user.weight = user.user_info.weight;
+            this.user.religion = user.religion;
+            this.user.blood = user.user_info.blood_group;
+            this.user.location = user.address;
         },
 
         editUser(user) {
@@ -384,32 +479,28 @@ export default {
             this.user.status = user.status;
         },
 
-        clearForm() {
-            this.edit = false;
-            this.user.id = null;
-            this.user.name = "";
-            this.user.email = "";
-            this.user.password = "";
-            this.user.confirm_password = "";
-            this.user.role_id = "";
-            this.user.status = 'active';
-
-        },
         sorting(sortBy) {
             this.sortBy = sortBy;
             this.sortType = this.sortType == 'asc' || this.sortType == 'ASC' ? this.sortType = 'desc' : this.sortType = 'asc';
             this.fetchUser();
         },
 
-        setSelectedLanguage(selectedLanguage) {
-            this.selectedLanguage = selectedLanguage;
-            // console.log("i am clicked", selectedLanguage)
-        },
-
         clearSearch() {
             this.searchParameter = "",
-                this.fetchUser();
+            this.fetchUser();
         },
+
+        calculateAge(birthday) {
+            if (!birthday) return null;
+            const birthDate = new Date(birthday);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
 
     },
 
@@ -431,3 +522,19 @@ export default {
     }
 };
 </script>
+<style>
+    .icon-label {
+        display: flex;
+        align-items: center;
+    }
+    .icon-label i {
+        width: 1.25em;
+        text-align: center;
+    }
+    .icon-label strong {
+        margin-left: 5px;
+    }
+    .icon-label-text{
+        width: 120px;
+    }
+</style>

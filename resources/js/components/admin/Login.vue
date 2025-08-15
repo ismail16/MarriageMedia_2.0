@@ -1,11 +1,11 @@
 <template>
-    <div class="container-fluid bg-image bg-dark" style="background-image: url(/bg-login.png)">
+    <div class="container-fluid bg-image bg-dark" style="background-image: url(/images/login-bg.jpg)">
         <div class="d-flex justify-content-center align-items-center">
             <div class="row w-100 justify-content-center" style="margin: 10% 0px 15% 0px">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-4">
                     <div class="card bg-light border-primary mb-0 p-5">
                         <div class="card-header align-items-center justify-content-center">
-                            <h5 class="pt-2 pb-2 text-dark">
+                            <h5 class="pt-2 pb-2 text-dark text-center">
                                 Please login to your account.
                             </h5>
                         </div>
@@ -26,7 +26,7 @@
                                     </div>
                                     <div class="col-lg-10 col-9 pl-0">
                                         <input type="email" name="email" class="form-control border-secondary"
-                                            placeholder="example@mail.com" id="email" v-model="email"
+                                            placeholder="username@mail.com" id="email" v-model="email"
                                             aria-describedby="emailHelp" />
                                         <span class="help is-danger text-danger" v-if="errors.has('email')"
                                             v-text="errors.get('email')"></span>

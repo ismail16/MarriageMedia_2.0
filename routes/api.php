@@ -29,16 +29,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ('auth:admin-api')], function
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::resource('admin-user', AdminUserController::class)->names('admin.user');
-
     Route::resource('role', RoleController::class)->names('admin.role');
 
     // Route::resource('permission', PermissionController::class)->names('admin.permission');
-
     // Route::resource('permission', PermissionController::class)->names('admin.permission');
 
     Route::apiResource('permission', PermissionController::class);
     Route::resource('role-permission', RolePermissionController::class)->names('admin.role-permission');
-
 
     Route::resource('groom-bride', GroomBrideController::class)->names('groom-bride');
 });

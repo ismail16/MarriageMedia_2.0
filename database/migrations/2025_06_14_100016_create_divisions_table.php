@@ -15,6 +15,7 @@ class CreateDivisionsTable extends Migration
     {
         Schema::create('divisions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('country_id');
             $table->string('name');
             $table->string('bn_name')->nullable();
             $table->string('url')->nullable();

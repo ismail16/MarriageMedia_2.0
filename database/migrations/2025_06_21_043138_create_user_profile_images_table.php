@@ -15,7 +15,7 @@ class CreateUserProfileImagesTable extends Migration
     {
         Schema::create('user_profile_images', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->integer('profile_image')->default(0);
             $table->string('image');
             $table->text('image_slug');

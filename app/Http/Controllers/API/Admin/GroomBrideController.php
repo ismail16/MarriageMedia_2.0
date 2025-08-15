@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers\API\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Interfaces\Admin\GroomBrideInterface;
+use App\Mail\VerifySuccessfulMail;
+use App\Models\Admin\PersonalInfo;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Interfaces\Admin\GroomBrideInterface;
+use App\Traits\ApiResponser;
 
 class GroomBrideController extends Controller
 {
+    use ApiResponser;
 
     private $groomBrideRepository;
 
@@ -63,10 +69,31 @@ class GroomBrideController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $parms = $request->all();
-        return $this->groomBrideRepository->update($parms, $id);
+        // dd($request->activation);
+
+        $user = User::find($id);
+        $user->status = $request->user_status;
+        $user->activation = $request->activation;
+
+
+        if ($request->user_status == 1) {
+            // Mail::to($user->email)->queue(new VerifySuccessfulMail($user));
+        } else {
+            $user->status = 0;
+        }
+        $PersonalInfo = PersonalInfo::where('user_id', $id)->first();
+        if ($request->user_status == 1  && $request->activation == 1) {
+            $PersonalInfo->status = 1;
+            $PersonalInfo->save();
+        } else {
+            $PersonalInfo->status = 0;
+            $PersonalInfo->save();
+        }
+        $user->save();
+
+        return $this->successResponse($user, 'Data saved Successfully!');
     }
 
     /**

@@ -18,6 +18,7 @@ class Country extends Model
         'status'
     ];
 
+
     public function scopeCountryId($query, $id)
     {
         return $query->where('id', $id);

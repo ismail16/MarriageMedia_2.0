@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('uid');
-            $table->integer('package_price_id')->nullable();
+            $table->unsignedBigInteger('package_price_id')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->string('first_name');
             $table->string('last_name');
@@ -25,8 +25,10 @@ class CreateUsersTable extends Migration
             $table->string('gender');
             $table->string('marital_status');
             $table->string('profession');
-            $table->string('country');
-            $table->string('district')->nullable();
+            $table->unsignedBigInteger('country_id');
+            $table->unsignedBigInteger('division_id')->nullable();
+            $table->unsignedBigInteger('district_id')->nullable();
+            $table->unsignedBigInteger('upazila_id')->nullable();
             $table->string('birthday');
             $table->string('guardian_mobile')->nullable();
             $table->string('createdby');

@@ -15,6 +15,9 @@ class CreateUnionsTable extends Migration
     {
         Schema::create('unions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('country_id');
+            $table->unsignedBigInteger('division_id');
+            $table->unsignedBigInteger('district_id');
             $table->unsignedBigInteger('upazila_id');
             $table->string('name');
             $table->string('bn_name')->nullable();

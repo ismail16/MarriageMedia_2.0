@@ -20,6 +20,10 @@
     /* Apply blur effect on hover */
 }
 
+.btn-xs{
+  padding: 2px 5px;
+  font-size: 12px;
+}
 .detail-link {
     position: absolute;
     top: 50%;

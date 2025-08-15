@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('iso_code_2')->nullable();
-            $table->string('iso_code_3')->nullable();
-            $table->string('address_format_id')->nullable();
+            $table->string('nationality')->nullable();
+            $table->string('bn_name')->nullable();
             $table->string('country_code')->nullable();
-            $table->enum('status', ['active', 'inactive', 'disable'])->default('active');
+            $table->enum('status', ['1', '0'])->default('1');
             $table->softDeletes();
             $table->timestamps();
         });

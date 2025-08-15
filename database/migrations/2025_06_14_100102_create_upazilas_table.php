@@ -15,6 +15,8 @@ class CreateUpazilasTable extends Migration
     {
         Schema::create('upazilas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('country_id');
+            $table->unsignedBigInteger('division_id');
             $table->unsignedBigInteger('district_id');
             $table->string('name');
             $table->string('bn_name')->nullable();

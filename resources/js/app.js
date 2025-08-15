@@ -4,6 +4,9 @@ import "./bootstrap";
 import "../../public/assets/plugins/daterangepicker/daterangepicker.css";
 import "../../public/assets/plugins/simplebar/simplebar.css";
 import "../../public/assets/css/style.css";
+import "../../public/backend/css/timeline.css";
+import "../../public/frontend_assets/css/customs.css";
+
 // import 'vue-multiselect/dist/vue-multiselect.css';
 
 // Backend js

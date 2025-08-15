@@ -16,10 +16,12 @@ use App\Repository\Web\UserAuthRepository;
 use App\Interfaces\Admin\DistrictInterface;
 use App\Interfaces\Admin\AdminUserInterface;
 use App\Repository\Admin\DistrictRepository;
+use App\Interfaces\Admin\GroomBrideInterface;
 use App\Interfaces\Admin\PermissionInterface;
 use App\Interfaces\Admin\ProfessionInterface;
 use App\Interfaces\Web\CustomerAuthInterface;
 use App\Repository\Admin\AdminUserRepository;
+use App\Repository\Admin\GroomBrideRepository;
 use App\Repository\Admin\PermissionRepository;
 use App\Repository\Admin\ProfessionRepository;
 use App\Repository\Web\CustomerAuthRepository;
@@ -41,6 +43,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(PermissionInterface::class, PermissionRepository::class);
         $this->app->bind(AdminUserInterface::class, AdminUserRepository::class);
         $this->app->bind(ProfessionInterface::class, ProfessionRepository::class);
+
+        $this->app->bind(GroomBrideInterface::class, GroomBrideRepository::class);
+
         $this->app->bind(DistrictInterface::class, DistrictRepository::class);
         $this->app->bind(WebUserInterface::class, WebUserRepository::class);
         $this->app->bind(UserAuthInterface::class, UserAuthRepository::class);
