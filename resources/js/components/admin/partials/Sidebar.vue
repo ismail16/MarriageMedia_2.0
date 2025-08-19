@@ -70,9 +70,18 @@
                         <div class="collapse">
                             <ul class="sub-menu" id="users" data-parent="#sidebar-menu">
                                 <li>
-                                    <!-- <router-link to="#" class="sidenav-item-link">Request Brides/Grooms</router-link> -->
-                                    <router-link to="/admin/activebridegroom" class="sidenav-item-link">Active Brides/Grooms</router-link>
-                                    <!-- <router-link to="#" class="sidenav-item-link">Archive</router-link> -->
+                                    <router-link to="/admin/request-bride-groom" class="sidenav-item-link">
+                                        <img src="/images/icons/flaticon/031-mail.png" height="18" alt="">
+                                        <span class="ml-1">Request</span>
+                                    </router-link>
+                                    <router-link to="/admin/active-bride-groom" class="sidenav-item-link">
+                                        <img src="/images/icons/flaticon/064-love.png" height="18" alt="">
+                                        <span class="ml-1">Active</span>
+                                    </router-link>
+                                    <router-link to="/admin/archive-bride-groom" class="sidenav-item-link">
+                                        <img src="/images/icons/flaticon/027-behavior.png" height="18" alt="">
+                                        <span class="ml-1">Archive</span>
+                                    </router-link>
                                 </li>
                             </ul>
                         </div>

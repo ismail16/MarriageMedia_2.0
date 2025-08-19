@@ -25,27 +25,34 @@ class GroomBrideRepository implements GroomBrideInterface
             } else {
                 $numOfResult = 100;
             }
-
             $user = new User;
-
             $sortBy = ['id', 'first_name', 'last_name', 'email'];
             $sortType = ['ASC', 'DESC', 'asc', 'desc'];
-
             if (isset($_GET['sortBy']) && $_GET['sortBy'] != '' && isset($_GET['sortType']) && $_GET['sortType'] != '' && in_array($_GET['sortBy'], $sortBy) && in_array($_GET['sortType'], $sortType)) {
                 $user = $user->orderBy($_GET['sortBy'], $_GET['sortType']);
             }
-
             if (isset($_GET['searchParameter']) && $_GET['searchParameter'] != '') {
                 $user = $user->searchParameter($_GET['searchParameter']);
             }
+
+            if (isset($_GET['status']) && $_GET['status'] != '') {
+                $user = $user->where('status', $_GET['status']);
+            }
+            if (isset($_GET['activation']) && $_GET['activation'] != '') {
+                $user = $user->where('activation', $_GET['activation']);
+            }
+
+            // dd($user);
 
             // Eager load latest and all profile images
             $user = $user->with(['profileImages']);
             $user = $user->with(['user_info']);
 
-
             return $this->successResponse(UserResource::collection($user->paginate($numOfResult)), 'Data Get Successfully!');
         } catch (Exception $e) {
+
+            dd($e);
+
             return $this->errorResponse();
         }
     }
@@ -60,12 +67,7 @@ class GroomBrideRepository implements GroomBrideInterface
         $user = $user->with('division');
         $user = $user->with('district');
         $user = $user->with('upazila');
-
-
         $user = $user->findOrFail($id);
-
-        // dd($user);
-
         try {
             return $this->successResponse($user, 'Data Get Successfully!');
         } catch (Exception $e) {

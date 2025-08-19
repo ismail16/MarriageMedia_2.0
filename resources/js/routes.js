@@ -20,10 +20,10 @@ import Admin from "./components/admin/admins/Admin.vue";
 import Customer from "./components/admin/users/Customer.vue";
 import CustomerProfile from "./components/admin/users/CustomerProfile.vue";
 
+import requestbridegroom from "./components/admin/groom_bride/Request.vue";
 import activebridegroom from "./components/admin/groom_bride/Active.vue";
+import archivebridegroom from "./components/admin/groom_bride/Archive.vue";
 import activeBrideGroomShow from "./components/admin/groom_bride/Show.vue";
-
-
 
 
 export default [
@@ -55,7 +55,10 @@ export default [
 
 
             //user
-            { path: "activebridegroom", component: activebridegroom, name: "activebridegroom", meta: { auth: true }},
+            { path: "request-bride-groom", component: requestbridegroom, name: "requestbridegroom", meta: { auth: true }},
+            { path: "active-bride-groom", component: activebridegroom, name: "activebridegroom", meta: { auth: true }},
+            { path: "archive-bride-groom", component: archivebridegroom, name: "archivebridegroom", meta: { auth: true }},
+
             { path: "activebridegroom/show/:id", component: activeBrideGroomShow, name: "read-activebridegroom", meta: { auth: true }},
             // { path: "customer", component: Customer, name: "customer", meta: { auth: true }},
             // { path: "read-customers/:id", component: CustomerProfile, name: "read-customers", meta: { auth: true }},

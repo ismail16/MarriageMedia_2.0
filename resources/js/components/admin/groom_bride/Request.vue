@@ -4,7 +4,7 @@
             <div>
                 <h1>Brides/Grooms Active</h1>
                 <p class="breadcrumbs"><span><a href="/admin/dashboard">Dashboard</a></span>
-                    <span><i class="mdi mdi-chevron-right"></i></span>Brides/Grooms Active
+                    <span><i class="mdi mdi-chevron-right"></i></span>Brides/Grooms Request
                 </p>
             </div>
         </div>
@@ -13,7 +13,8 @@
                 <div class="vendor-list card card-default">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <div class="dataTables_length float-start" id="productpagesTable_length"><label>Show
+                            <div class="dataTables_length float-start" id="productpagesTable_length">
+                                <label>Show
                                     <select name="productpagesTable_length" class="" v-model="limit"
                                         v-on:change="fetchUser()">
                                         <option value="10">10</option>
@@ -23,7 +24,8 @@
                                         <option value="200">200</option>
                                         <option value="500">500</option>
                                         <option value="1000">1000</option>
-                                    </select> entries</label></div>
+                                    </select> entries</label>
+                            </div>
                             <div id="productpagesTable_filter" class="dataTables_filter float-end">
                                 <div class="d-flex">
                                     <input type="text" class="form-control form-control-sm" placeholder="Search"
@@ -62,11 +64,11 @@
                                         <td> {{ user.email }}</td>
                                         <td>{{ user.mobile }}</td>
                                         <td>
-                                            <button v-if="user.status == 0" class="btn btn-xs text-white bg-danger"><i
+                                            <button v-if="user.activation == 0"
+                                                class="btn btn-xs text-white bg-danger"><i
                                                     class="fa fa-times-circle"></i> Not Activated</button>
                                             <button v-else class="btn btn-xs text-white bg-success"><i
                                                     class="fa fa-check-circle"></i> Activated</button>
-                                            <!-- {{ user.status }} -->
                                         </td>
                                         <td>
                                             <button v-if="user.status == 0" class="btn btn-xs text-white bg-danger"><i
@@ -117,14 +119,13 @@
                                         class="page-link" href="#" @click="fetchUser(pagination.next_page_url)">Next</a>
                                 </li>
                             </ul>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Add User Modal  -->
+        <!-- User Modal  -->
         <div class="modal fade modal-add-contact" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
             aria-hidden="true" ref="UserProfileCard">
 
@@ -140,47 +141,57 @@
                         <h4 class="text-center bg-info rounded">Profile ID - {{ this.user.uid }}</h4>
                         <div class="row mt-3">
                             <div class="col-md-5 pb-3 d-flex justify-content-center align-items-center">
-                                <img v-if="user.image" :src="user.image" class="img-fluid w-75"/>
-                                <img v-else-if="this.user.gender == 'female'" 
-                                    src="/images/icons/flaticon/arab-woman.png" alt="Bride Image" class="img-fluid w-75"/>
-                                <img v-else src="/images/icons/flaticon/businessman.png" alt="Groom Image"  class="img-fluid w-75"/>
+                                <img v-if="user.image" :src="user.image" class="img-fluid w-75" />
+                                <img v-else-if="this.user.gender == 'female'"
+                                    src="/images/icons/flaticon/arab-woman.png" alt="Bride Image"
+                                    class="img-fluid w-75" />
+                                <img v-else src="/images/icons/flaticon/businessman.png" alt="Groom Image"
+                                    class="img-fluid w-75" />
                             </div>
                             <div class="col-md-7">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="icon-label">
-                                            <p class="icon-label-text"><i class="far fa-calendar-alt text-success"></i> Age</p>
+                                            <p class="icon-label-text"><i class="far fa-calendar-alt text-success"></i>
+                                                Age</p>
                                             <strong>: {{ calculateAge(this.user.age) }} Years</strong>
                                         </div>
                                         <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fas fa-female text-primary"></i> Gender</p>
+                                            <p class="icon-label-text"><i class="fas fa-female text-primary"></i> Gender
+                                            </p>
                                             <strong>: {{ this.user.gender }}</strong>
                                         </div>
                                         <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fas fa-briefcase text-success"></i> Profession</p>
+                                            <p class="icon-label-text"><i class="fas fa-briefcase text-success"></i>
+                                                Profession</p>
                                             <strong>: {{ this.user.profession }}</strong>
                                         </div>
 
                                         <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fas fa-graduation-cap text-info"></i> Qualification</p>
+                                            <p class="icon-label-text"><i class="fas fa-graduation-cap text-info"></i>
+                                                Qualification</p>
                                             <strong>: {{ this.user.qualification }}</strong>
                                         </div>
                                         <div class="icon-label">
-                                            <p class="icon-label-text"><i class="text-danger fas fa-heart"></i> Marital status</p>
+                                            <p class="icon-label-text"><i class="text-danger fas fa-heart"></i> Marital
+                                                status</p>
                                             <strong>: {{ this.user.maritalStatus }}</strong>
                                         </div>
 
                                         <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fas fa-restroom text-success"></i> Height </p>
+                                            <p class="icon-label-text"><i class="fas fa-restroom text-success"></i>
+                                                Height </p>
                                             <strong>: {{ this.user.height }}</strong>
                                         </div>
                                         <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fas fa-weight text-info"></i> Weight</p>
+                                            <p class="icon-label-text"><i class="fas fa-weight text-info"></i> Weight
+                                            </p>
                                             <strong>: {{ this.user.weight }} KG</strong>
                                         </div>
 
                                         <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fas fa-synagogue text-success"></i> Religion</p>
+                                            <p class="icon-label-text"><i class="fas fa-synagogue text-success"></i>
+                                                Religion</p>
                                             <strong>: {{ this.user.religion }}</strong>
                                         </div>
 
@@ -189,18 +200,19 @@
                                             <strong>: {{ this.user.blood }}</strong>
                                         </div>
                                         <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fa fa-map-marker text-warning"></i>Location</p>
+                                            <p class="icon-label-text"><i
+                                                    class="fa fa-map-marker text-warning"></i>Location</p>
                                             <strong>: {{ this.user.location }}</strong>
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                         <h4 class="text-center bg-light rounded mt-3">www.bdmarriagemedia.com</h4>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" @click="closeModal"> 
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" @click="closeModal">
                             <i class="fas fa-times"></i> Close
                         </button>
                         <!-- <button type="button" class="btn btn-primary btn-sm" data-toggle="collapse"
@@ -229,8 +241,8 @@
 
             </div>
         </div>
-    </div> <!-- End Content -->
 
+    </div> <!-- End Content -->
 </template>
 <script>
 import ErrorHandling from "../../../plugins/ErrorHandling";
@@ -307,7 +319,7 @@ export default {
             }
 
             page_url += '&sortBy=' + this.sortBy + '&sortType=' + this.sortType;
-            page_url += '&status=1&activation=1';
+            page_url += '&activation=0';
 
             var responseData = {};
 
@@ -386,7 +398,7 @@ export default {
 
         clearSearch() {
             this.searchParameter = "",
-            this.fetchUser();
+                this.fetchUser();
         },
 
         calculateAge(birthday) {
@@ -422,18 +434,21 @@ export default {
 };
 </script>
 <style>
-    .icon-label {
-        display: flex;
-        align-items: center;
-    }
-    .icon-label i {
-        width: 1.25em;
-        text-align: center;
-    }
-    .icon-label strong {
-        margin-left: 5px;
-    }
-    .icon-label-text{
-        width: 120px;
-    }
+.icon-label {
+    display: flex;
+    align-items: center;
+}
+
+.icon-label i {
+    width: 1.25em;
+    text-align: center;
+}
+
+.icon-label strong {
+    margin-left: 5px;
+}
+
+.icon-label-text {
+    width: 120px;
+}
 </style>

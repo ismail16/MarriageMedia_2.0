@@ -4,7 +4,7 @@
             <div>
                 <h1>Brides/Grooms Active</h1>
                 <p class="breadcrumbs"><span><a href="/admin/dashboard">Dashboard</a></span>
-                    <span><i class="mdi mdi-chevron-right"></i></span>Brides/Grooms Active
+                    <span><i class="mdi mdi-chevron-right"></i></span>Brides/Grooms Archive
                 </p>
             </div>
         </div>
@@ -62,7 +62,7 @@
                                         <td> {{ user.email }}</td>
                                         <td>{{ user.mobile }}</td>
                                         <td>
-                                            <button v-if="user.status == 0" class="btn btn-xs text-white bg-danger"><i
+                                            <button v-if="user.activation == 0" class="btn btn-xs text-white bg-danger"><i
                                                     class="fa fa-times-circle"></i> Not Activated</button>
                                             <button v-else class="btn btn-xs text-white bg-success"><i
                                                     class="fa fa-check-circle"></i> Activated</button>
@@ -71,6 +71,15 @@
                                         <td>
                                             <button v-if="user.status == 0" class="btn btn-xs text-white bg-danger"><i
                                                     class="fa fa-times-circle"></i> Not Verify</button>
+                                            
+                                            <button v-else-if="user.status == 5" class="btn btn-xs text-white bg-warning">
+                                                <i class="fa fa-times-circle"></i> Marriage Completed
+                                            </button>
+                                                    
+                                            <button v-else-if="user.status == 6" class="btn btn-xs text-white bg-warning">
+                                                <i class="fa fa-times-circle"></i> Account Deleted
+                                            </button>
+
                                             <button v-else class="btn btn-xs text-white bg-success"><i
                                                     class="fa fa-check-circle"></i> Verified</button>
                                         </td>
@@ -123,114 +132,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- Add User Modal  -->
-        <div class="modal fade modal-add-contact" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true" ref="UserProfileCard">
-
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content px-5 " style="height:auto;">
-                    <div class="modal-header">
-                        <!-- <h2 class="modal-title" id="exampleModalCenterTitle"></h2> -->
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body card gradient m-3">
-                        <h4 class="text-center bg-info rounded">Profile ID - {{ this.user.uid }}</h4>
-                        <div class="row mt-3">
-                            <div class="col-md-5 pb-3 d-flex justify-content-center align-items-center">
-                                <img v-if="user.image" :src="user.image" class="img-fluid w-75"/>
-                                <img v-else-if="this.user.gender == 'female'" 
-                                    src="/images/icons/flaticon/arab-woman.png" alt="Bride Image" class="img-fluid w-75"/>
-                                <img v-else src="/images/icons/flaticon/businessman.png" alt="Groom Image"  class="img-fluid w-75"/>
-                            </div>
-                            <div class="col-md-7">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="icon-label">
-                                            <p class="icon-label-text"><i class="far fa-calendar-alt text-success"></i> Age</p>
-                                            <strong>: {{ calculateAge(this.user.age) }} Years</strong>
-                                        </div>
-                                        <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fas fa-female text-primary"></i> Gender</p>
-                                            <strong>: {{ this.user.gender }}</strong>
-                                        </div>
-                                        <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fas fa-briefcase text-success"></i> Profession</p>
-                                            <strong>: {{ this.user.profession }}</strong>
-                                        </div>
-
-                                        <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fas fa-graduation-cap text-info"></i> Qualification</p>
-                                            <strong>: {{ this.user.qualification }}</strong>
-                                        </div>
-                                        <div class="icon-label">
-                                            <p class="icon-label-text"><i class="text-danger fas fa-heart"></i> Marital status</p>
-                                            <strong>: {{ this.user.maritalStatus }}</strong>
-                                        </div>
-
-                                        <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fas fa-restroom text-success"></i> Height </p>
-                                            <strong>: {{ this.user.height }}</strong>
-                                        </div>
-                                        <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fas fa-weight text-info"></i> Weight</p>
-                                            <strong>: {{ this.user.weight }} KG</strong>
-                                        </div>
-
-                                        <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fas fa-synagogue text-success"></i> Religion</p>
-                                            <strong>: {{ this.user.religion }}</strong>
-                                        </div>
-
-                                        <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fas text-danger fa-tint"></i> Blood</p>
-                                            <strong>: {{ this.user.blood }}</strong>
-                                        </div>
-                                        <div class="icon-label">
-                                            <p class="icon-label-text"><i class="fa fa-map-marker text-warning"></i>Location</p>
-                                            <strong>: {{ this.user.location }}</strong>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>                            
-                        </div>
-                        <h4 class="text-center bg-light rounded mt-3">www.bdmarriagemedia.com</h4>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" @click="closeModal"> 
-                            <i class="fas fa-times"></i> Close
-                        </button>
-                        <!-- <button type="button" class="btn btn-primary btn-sm" data-toggle="collapse"
-                            data-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample"> <i
-                                class="fas fa-share pr-2"></i>
-                            Share</button> -->
-                    </div>
-
-                    <!-- <div class="collapse show" id="collapseExample" style="">
-                        <div class="">
-                            <ul class="d-flex list-unstyled justify-content-end mb-2">
-
-                                <li class="ml-3 p-3"><a href="#" class="social-share-link" data-platform="facebook"><i
-                                            class="fab fa-facebook text-primary fa-2x"></i></a></li>
-                                <li class="ml-3 p-3"><a href="#" class="social-share-link" data-platform="twitter"><i
-                                            class="fab fa-twitter text-primary fa-2x"></i></a></li>
-                                <li class="ml-3 p-3"><a href="#" class="social-share-link" data-platform="whatsapp"><i
-                                            class="fab fa-whatsapp text-success fa-2x"></i></a></li>
-                                <li class="ml-3 p-3"><a href="#" class="social-share-link" data-platform="linkedin"><i
-                                            class="fab fa-linkedin text-info fa-2x"></i></a></li>
-                                <li class="ml-3 p-3"> <a href=""><i class="fas fa-link fa-2x"></i></a></li>
-                            </ul>
-                        </div>
-                    </div> -->
-                </div>
-
-            </div>
-        </div>
-    </div> <!-- End Content -->
-
+    </div>
 </template>
 <script>
 import ErrorHandling from "../../../plugins/ErrorHandling";
@@ -307,7 +209,7 @@ export default {
             }
 
             page_url += '&sortBy=' + this.sortBy + '&sortType=' + this.sortType;
-            page_url += '&status=1&activation=1';
+            page_url += '&status=5';
 
             var responseData = {};
 
