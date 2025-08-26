@@ -25,6 +25,8 @@ import activebridegroom from "./components/admin/groom_bride/Active.vue";
 import archivebridegroom from "./components/admin/groom_bride/Archive.vue";
 import activeBrideGroomShow from "./components/admin/groom_bride/Show.vue";
 
+import Message from "./components/admin/message/Message.vue";
+
 
 export default [
     { path: "/admin/login", component: Login, name: "Login", meta: { auth: false }},
@@ -33,6 +35,12 @@ export default [
     {
         path: "/admin/", component: () => import("./components/Main.vue"), name: "main",
         children: [
+
+            { path: "message", component: Message, name: "message", meta: { auth: true }},
+
+
+
+
             { path: "dashboard", component: Dashboard, name: "dashboard", meta: { auth: true }},
 
             //role permission

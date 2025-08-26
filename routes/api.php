@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Admin\AuthController;
 use App\Http\Controllers\API\Admin\RoleController;
 use App\Http\Controllers\API\Web\UserAuthController;
+use App\Http\Controllers\API\Admin\MessageController;
 use App\Http\Controllers\API\Admin\DistrictController;
 use App\Http\Controllers\API\Admin\AdminUserController;
 use App\Http\Controllers\API\Admin\GroomBrideController;
@@ -38,6 +39,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ('auth:admin-api')], function
     Route::resource('role-permission', RolePermissionController::class)->names('admin.role-permission');
 
     Route::resource('groom-bride', GroomBrideController::class)->names('groom-bride');
+
+    Route::resource('message', MessageController::class)->names('message');
 });
 
 // Route::post('/user/login', [UserAuthController::class, 'login'])->name('user.login');

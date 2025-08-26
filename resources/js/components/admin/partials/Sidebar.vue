@@ -88,10 +88,10 @@
                     </li>
 
                     <li class="has-sub mt-2">
-                        <a class="sidenav-item-link" href="javascript:void(0)">
+                        <router-link to="/admin/message" class="sidenav-item-link">
                             <img src="/images/icons/flaticon/080-message-1.png" height="25" alt="">
-                            <span class="nav-text ml-2">Message</span>
-                        </a>
+                            <span class="ml-1">Message</span>
+                        </router-link>
                     </li>
 
                     <li class="has-sub mt-2">

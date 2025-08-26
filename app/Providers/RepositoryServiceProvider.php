@@ -7,10 +7,12 @@ use App\Interfaces\Admin\AuthInterface;
 use App\Interfaces\Admin\RoleInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Http\Resources\Admin\Profession;
+use App\Interfaces\Web\MessageInterface;
 use App\Repository\Admin\AuthRepository;
 use App\Repository\Admin\RoleRepository;
 use App\Interfaces\Web\CustomerInterface;
 use App\Interfaces\Web\UserAuthInterface;
+use App\Repository\Web\MessageRepository;
 use App\Repository\Web\CustomerRepository;
 use App\Repository\Web\UserAuthRepository;
 use App\Interfaces\Admin\DistrictInterface;
@@ -51,6 +53,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(UserAuthInterface::class, UserAuthRepository::class);
         $this->app->bind(CustomerAuthInterface::class, CustomerAuthRepository::class);
         $this->app->bind(CustomerInterface::class, CustomerRepository::class);
+
+        $this->app->bind(MessageInterface::class, MessageRepository::class);
     }
 
     /**
