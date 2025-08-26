@@ -27,6 +27,8 @@ use App\Repository\Admin\GroomBrideRepository;
 use App\Repository\Admin\PermissionRepository;
 use App\Repository\Admin\ProfessionRepository;
 use App\Repository\Web\CustomerAuthRepository;
+use App\Interfaces\Admin\SuccessStoryInterface;
+use App\Repository\Admin\SuccessStoryRepository;
 use App\Interfaces\Admin\RolePermissionInterface;
 use App\Repository\Admin\RolePermissionRepository;
 use App\Interfaces\Web\UserInterface as WebUserInterface;
@@ -55,6 +57,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CustomerInterface::class, CustomerRepository::class);
 
         $this->app->bind(MessageInterface::class, MessageRepository::class);
+        $this->app->bind(SuccessStoryInterface::class, SuccessStoryRepository::class);
     }
 
     /**

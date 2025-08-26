@@ -2,9 +2,9 @@
     <div class="content">
         <div class="breadcrumb-wrapper breadcrumb-contacts">
             <div>
-                <h1>Brides/Grooms Active</h1>
+                <h1>Messages</h1>
                 <p class="breadcrumbs"><span><a href="/admin/dashboard">Dashboard</a></span>
-                    <span><i class="mdi mdi-chevron-right"></i></span>Brides/Grooms Active
+                    <span><i class="mdi mdi-chevron-right"></i></span>Messages
                 </p>
             </div>
         </div>

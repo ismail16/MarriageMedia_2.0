@@ -102,10 +102,10 @@
                     </li>
 
                     <li class="has-sub mt-2">
-                        <a class="sidenav-item-link" href="javascript:void(0)">
+                        <router-link to="/admin/success-story" class="sidenav-item-link">
                             <img src="/images/icons/flaticon/045-wedding-couple.png" height="25" alt="">
-                            <span class="nav-text ml-2">Success Story</span>
-                        </a>
+                            <span class="ml-1">Success Story</span>
+                        </router-link>
                     </li>
 
                     <li class="has-sub mt-2">
