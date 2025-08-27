@@ -109,10 +109,10 @@
                     </li>
 
                     <li class="has-sub mt-2">
-                        <a class="sidenav-item-link" href="javascript:void(0)">
+                        <router-link to="/admin/package-price" class="sidenav-item-link">
                             <img src="/images/icons/flaticon/076-delivery-box.png" height="25" alt="">
-                            <span class="nav-text ml-2">Package Price</span>
-                        </a>
+                            <span class="ml-1">Package Price</span>
+                        </router-link>
                     </li>
 
                     <!-- Area -->

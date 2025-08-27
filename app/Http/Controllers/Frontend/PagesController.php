@@ -9,7 +9,7 @@ use App\Models\Proposal;
 use App\Models\Preference;
 use App\Models\ImageAccess;
 use App\Models\PackagePrice;
-use App\Models\SuccessStory;
+use App\Models\Web\SuccessStory;
 use Illuminate\Http\Request;
 use App\Mail\VerificationMail;
 use App\Models\UserProfileImage;

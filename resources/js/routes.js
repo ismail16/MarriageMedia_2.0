@@ -28,6 +28,8 @@ import activeBrideGroomShow from "./components/admin/groom_bride/Show.vue";
 import Message from "./components/admin/message/Message.vue";
 import SuccessStory from "./components/admin/success_story/SuccessStory.vue";
 
+import PackagePrice from "./components/admin/package_price/PackagePrice.vue";
+
 
 export default [
     { path: "/admin/login", component: Login, name: "Login", meta: { auth: false }},
@@ -39,6 +41,7 @@ export default [
 
             { path: "message", component: Message, name: "message", meta: { auth: true }},
             { path: "success-story", component: SuccessStory, name: "success-story", meta: { auth: true }},
+            { path: "package-price", component: PackagePrice, name: "package-price", meta: { auth: true }},
 
             { path: "dashboard", component: Dashboard, name: "dashboard", meta: { auth: true }},
 

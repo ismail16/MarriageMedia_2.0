@@ -14,6 +14,7 @@ use App\Http\Controllers\API\Admin\GroomBrideController;
 use App\Http\Controllers\API\Admin\PermissionController;
 use App\Http\Controllers\API\Admin\ProfessionController;
 use App\Http\Controllers\API\Web\CustomerAuthController;
+use App\Http\Controllers\API\Admin\PackagePriceController;
 use App\Http\Controllers\API\Admin\SuccessStoryController;
 use App\Http\Controllers\API\Admin\RolePermissionController;
 use App\Http\Controllers\API\Web\UserController as WebUserController;
@@ -43,6 +44,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ('auth:admin-api')], function
 
     Route::resource('message', MessageController::class)->names('message');
     Route::resource('success-story', SuccessStoryController::class)->names('success-story');
+    Route::resource('package-price', PackagePriceController::class)->names('package-price');
 });
 
 // Route::post('/user/login', [UserAuthController::class, 'login'])->name('user.login');
